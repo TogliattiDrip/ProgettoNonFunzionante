@@ -1,0 +1,6 @@
+class second{
+protected:
+
+public:
+
+};

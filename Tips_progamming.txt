@@ -1,0 +1,201 @@
+
+/*
+Per compilare il file
+g++ -I/mingw64/include/ncurses -o <Progetto> <Progetto.cpp> -lncurses -L/mingw64/bin -static
+
+Per lanciarlo
+<nomeprogetto>
+
+*/
+
+
+
+initscr();
+	/*
+	*inizializza lo schermo
+	*/
+
+endwin();
+	/*
+	*chiude lo schermo e pulisce la RAM
+	*/
+
+//lista attributi
+	/*
+	    A_NORMAL
+	    A_STANDOUT
+	    A_REVERSE
+	    A_BLINK
+	    A_DIM
+	    A_BOLD
+	    A_PROTECT
+	    A_INVIS
+	    A_ALTCHARSET
+	    A_CHARTEXT
+	*/
+
+	//lista colori (da usarsi come attributo)
+
+	/*
+	 * COLOR_PAIR(n) sceglia la coppia creata con ID n
+	 * COLOR_BLACK
+	 * COLOR_RED
+	 * COLOR_GREEN
+	 * COLOR_YELLOW
+	 * COLOR_BLUE
+	 * COLOR_MAGENTA
+	 * COLOR_CYAN
+	 * COLOR_WHITE
+	 */
+
+
+has_colors();
+//restituisce un boolean-->    1 se il terminale supporta i colori     0 se il terminale non supporta i coloris
+
+start_color();
+//inizializza i colori per il terminale	Da mettere all'inizio del codice, dopo aver iniziato lo schermo
+
+//init_color(<COLOR_CYAN>,<0-999 RED>,<0-999 GREEN>, <0-999 BLUE>)
+//modifica un colore sulla base di quello inserito
+
+//initi_pair(<n>, <background_color>, <text_color>);
+
+attron(<attribute>)		attroff(<attribute>)
+	/*
+	*attiva un attributo, come colore o modifica del testo
+	*le due funzioni attivano-disattivano il singolo attributo
+	*eseguirlo all'interno di una finestra non sembra produrre risultati
+	*aggiungere w all'inizio del comando per eseguirlo in una finestra specifica, da inserire come attributo
+	*wattron(<window>, <attribute>)
+	*/
+attr_t <name>;
+	/*
+	*attr_t è un tipo di dato che immagazzina degli attributi dentro di se, e li associa al nome della variabile
+	*da questo momento in poi, si può usare il nome di quella variabile con attron ed attroff
+	*gli attributi possono essere associati con la sintassi-> attr_t primo = A_STANDOUT ! COLOR_PAIR(1);
+	*/
+
+keypad(<window>, <true-false for on-off>);
+	/*
+	*permette di prendere in input i valori ascii delle freccette
+	*può anche prendere F1-F12 se ad altro
+	*KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT per i parametri delle freccette
+	*KEY_F(<int>) per gli F1-F12
+	*da mettere in combo con i getch()/wgetch();
+	*/
+
+cbreak();
+    	/*
+	*i caratteri digitati ignorano loadings ed altro
+    	*utile per digitare cose che interrompono istantaneamente il
+    	*programma, come CTRL-C se non uso il raw
+	*/
+
+noecho()
+	/*
+	*posto prima di un'istruzione per prendere dati da tastiera
+	*nasconde ciò che viene digitato, senza stamparlo a schermo
+	*/
+halfdelay(<tenth of a second>);
+	/*
+	*come cbreak, rende l'input dello user immediatamente disponibile al compilatore
+	*quello che fa è dare una finestra di tempo all'utente per dare qualcosa in input
+	*se l'utente non da nessun input, restituirà un intero di errore e poi farà
+	*riprendere il codice
+	*/
+
+nodelay();
+	/*
+	*come il precedente, ma senza NESSUN delay
+	*/
+
+timeout(<milliseconds>);
+	/*
+	*come halfdelay, fa uso di una misura in millisecondi
+	*particolarmente utile in caso si debba fa scorrere 
+	*il gioco anche senza input dell'utente
+	*/
+
+
+getch()
+	/*
+	*prende il primo carattere digitato da tastiera
+	*può essere usato per ritornare il suddetto carattere
+	*ritorna l'ID del carattere in ascii (il valore INTERO)
+	*/
+
+wgetch(<window>);
+	/*
+	*prende il primo carattere digitato da tasiera all'interno della finestra
+	*la finestra in questione è quella specificata
+	*utile per fare pannelli di inserimento testuali
+	*/
+NOTA
+in caso si digiti invio e sia stato attivato KEYPAD(), invio ritorna valore 10
+
+mvprintw(<x>, <y>, <string>);
+	/*
+	*stampa una stringa in posizione specificata
+	*/
+
+refresh();
+	/*
+	*aggiorna lo schermo (non la finestra) con i nuovi dati
+	*/
+
+WINDOW* <window name> = newwin(<height>, ,<width>, <start_y>, <start_x>);
+	/*
+	*crea una nuova finestra
+	*/
+
+wrefresh(<window>);
+	/*
+	*aggiorna la finestra con i nuovi dati
+	*/
+
+mvwprintw(<window>, <x>, <y>, <string>);
+	/*
+	*stampa una stringa all'interno della finestra, con posizioni relative alla finestra
+	*/
+
+NOTA
+cercando di stampare una stringa di caratteri di tipo "string", specialmente nei mvprint, c++ si arrabbia e richiede che la stringa usi il metodo c_str()
+ex: stringa.c_str()
+
+box(<window>, <char ID (int) for left-right margins>, <char ID (int) for top-bottom margins>);
+	/*
+	*crea un bordo che evidenzia la finestra presa in esame
+	*/
+
+ 	/*
+     * getyx(<window>, <var1>, <var2>);
+     * ottiene la posizione del cursore e la salva in var1=y, var2=x
+     *
+     * getbegyx(<window>, var1, var2);
+     * stessa cosa del predecessore ma prende la posizione nell'angolo in alto a sinistra
+     * della finestra specificata
+     *
+     * getmaxyx(<window>, var1, var2);
+     * simile, restituisce le dimensioni / angolo basso-destro
+	*/
+
+usleep(<time in some measure unit(?)>)
+/*
+*stops the current function from progressing
+*/
+
+wtimeout(<window, milliseconds time window>)
+/*
+*aspetta un tot di tempo per ricevere e registrare un input
+*se non viene ricevuto nessun input, registra un default case di -1
+*/
+
+
+
+
+
+
+
+
+
+

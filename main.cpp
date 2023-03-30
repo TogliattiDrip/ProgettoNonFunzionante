@@ -9,11 +9,10 @@
 #include <cstring>
 #include <string>
 #include <ctime>
-#include "box.hpp"
-#include "player.hpp"
 #include <pthread.h>
 #include <windows.h>
 #include <fstream>
+#include "dataManager.hpp"
 using namespace std;
 typedef void * (*THREADFUNCPTR)(void *);
 
@@ -103,46 +102,6 @@ WINDOW* map_generatior(class MAP map1, class MAP map2, class MAP map3, class MAP
             return map10.create_map();
 }
 
-int save_data(player* P, int Seed)	//servono dati del player e seed mappa
-{
-	/*
-	 * MEMO: savegame structure as follows (WIP)
-	 * Line1: yloc (code 0)
-	 * Line2: xLoc (code 1)
-	 * Line3: Life (code 4)
-	 * Line4: money (code 11)
-	 * Line5: map seed
-	 *
-	 *
-	 *
-	 */
-
-
-	ofstream saveFile;	//crea variabile di alloggio del file
-	saveFile.open("savegame.txt");	//apre (o crea se non esiste) il file
-	int dataInt;
-	char dataChar [20];
-	dataInt=P->playeroutput(0);
-	saveFile << dataInt ;
-	saveFile << endl;
-
-	dataInt=P->playeroutput(1);
-	saveFile << dataInt << endl;
-
-	dataInt = P->playeroutput(4);
-	saveFile << dataInt << endl;
-
-	dataInt = P->playeroutput(11);
-	saveFile << dataInt << endl;
-
-	dataInt = Seed;
-	saveFile << Seed << endl;
-
-	saveFile.close();
-
-	return 1;
-}
-
 void game_flow(int y_scr, int x_scr, WINDOW* map, bool next_lvl, class BOX box,
                 class MAP map1, class MAP map2, class MAP map3, class MAP map4,
                 class MAP map5, class MAP map6, class MAP map7, class MAP map8,
@@ -227,7 +186,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, bool next_lvl, class BOX box,
     }
     else if(cx==3){
         //salva partita
-    	int kek=save_data(p, seed);
+    	int kek=save_data(p, seed, "savegame.txt" );
     	if(kek==1)
     	{
     		clear();

@@ -9,9 +9,8 @@
 #include <cstring>
 #include <string>
 #include <ctime>
-#include "box.hpp"
-#include "player.hpp"
 #include <fstream>
+#include "market.hpp"
 using namespace std;
 
 int save_data(player* P, int Seed, string filename);
@@ -29,4 +28,3 @@ int save_data(player* P, int Seed, string filename);
 
 
 //void read_data(){}
-

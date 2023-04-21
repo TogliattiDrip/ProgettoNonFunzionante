@@ -23,8 +23,12 @@ player::player(WINDOW * win, int y, int x, char c, int m, int l){
 	//Vita del giocatore
 	life=l;
 
-	//Soldi del giocatore (al momento inutilizzata)
+	//Soldi del giocatore
 	money=m;
+
+	//prezzo upgrade della vita e del salto
+	healthPrice=20;
+	jumpPrice=20;
 
 	//Indica le y del proiettile
 	projy=y;

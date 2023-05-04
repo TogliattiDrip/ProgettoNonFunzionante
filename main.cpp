@@ -1,16 +1,25 @@
 /*
- * g++ -I/mingw64/include/ncurses -o Progetto main.cpp player.hpp player.cpp box.hpp box.cpp dataManager.hpp dataManager.cpp market.hpp market.cpp -lncurses -lpthread -L/mingw64/bin -static
+ * Windows launch
+ * 	++ -I/mingw64/include/ncurses -o Progetto main.cpp player.hpp player.cpp box.hpp box.cpp dataManager.hpp dataManager.cpp market.hpp market.cpp -lncurses -lpthread -L/mingw64/bin -static
  *
+ *Linux launch
+ *g++ main.cpp player.hpp player.cpp box.hpp box.cpp dataManager.hpp dataManager.cpp market.hpp market.cpp .lncurses .o Progetto
  * nella cartella con il file .exe, lancia il nome del progetto ./file.exe
  */
 
 #include <iostream>
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 #include <cstring>
 #include <string>
 #include <ctime>
+#ifdef _WIN32
 #include <pthread.h>
+#endif
+
+#ifdef _WIN32
 #include <windows.h>
+#endif
+
 #include <fstream>
 #include "dataManager.hpp"	//includes market, which includes player and box
 using namespace std;
@@ -157,12 +166,20 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
 	//FOLLOWING: default values for creating player-class items
 	player_x=4;
 	player_y=15;
-	money=0;
+	money=100;
 	life=3;
+	int saltoH=10;
+	/*
+	 * ultima versione del salvataggio
+	 * le righe hanno una piccola descrizione di cosa rappresenta il numero che segue nel file di salvataggio
+	 * per selezionare solo il dato, ho implementato questo insieme di operazioni
+	 * in caso in cui il dato non venisse ritrovato, ritorna un messaggio di errore e ripristina i valori predefiniti per quel dato
+	 */
 
 	ifstream savegame;
-	string lel;
+	string lel, dump;
 	savegame.open("savegame.txt");
+
 	if(savegame.is_open())
 	{
 		getline(savegame, lel, '#');
@@ -177,6 +194,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
 			mvprintw((y_scr/2)-4, (x_scr/2)-2, "resorting to default value");
 			refresh();
 			getch();
+			getline(savegame, dump);	//goes to next line without saving
 
 		}
 
@@ -192,13 +210,40 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
 			mvprintw((y_scr/2)-4, (x_scr/2)-2, "resorting to default value");
 			refresh();
 			getch();
+			getline(savegame, dump);
 		}
 
-		getline(savegame, lel);
-		life = stoi(lel);
+		getline(savegame, lel, '#');		//check for saving of player health
+		if(lel.compare("life")==0)
+		{
+			getline(savegame, lel, '\n');
+			life=stoi(lel);
+		}else
+		{
+			clear();
+			mvprintw((y_scr/2)-5, (x_scr/2)-2, "error in locating player health");
+			mvprintw((y_scr/2)-4, (x_scr/2)-2, "resorting to default value");
+			refresh();
+			getch();
+			getline(savegame, dump);
+		}
 
-		getline(savegame, lel);
-		money = stoi(lel);
+
+		getline(savegame, lel, '#');		//check for saving of player money
+		if(lel.compare("credits")==0)
+		{
+			getline(savegame, lel, '\n');
+			money=stoi(lel);
+		}
+
+		getline(savegame, lel, '#');		//check for jumpHeight
+		if(lel.compare("jumpH")==0)
+		{
+			getline(savegame, lel, '\n');
+			saltoH=stoi(lel);
+		}
+
+
 
 		savegame.close();
 
@@ -207,6 +252,12 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
     player * p = new player(map, player_y, player_x, 'P', money, life);
         //(finestra, y da cui il personagio spawna,
         //x da cui il personaggio spawna, icona del personaggio)
+
+    p->salto=saltoH;
+
+
+
+
 
     //Inizializzazione del thread giocatore
 	pthread_t playerthread;
@@ -248,46 +299,146 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
     }
 
     char v1[20], v2[20], v3[20], v4[20];
-    strcpy(v1,"Menu");
-    strcpy(v2,"Resume");
-    strcpy(v3,"Market");
-    strcpy(v4,"Save and exit");
+        strcpy(v1,"Menu");
+        strcpy(v2,"Resume");
+        strcpy(v3,"Market");
+        strcpy(v4,"Save and exit");
 
-    MENU menu(y_scr/2,x_scr/2,y_scr/4,x_scr/4,v1,v2,v3,v4);
+        MENU menu(y_scr/2,x_scr/2,y_scr/4,x_scr/4,v1,v2,v3,v4);
 
-    char v5[20], v6[20], v7[20], v8[20];
-    strcpy(v5,"Market");
-    strcpy(v6,"Health boost");
-    strcpy(v7,"Jump boost");
-    strcpy(v8,"Return to the game");
+        char v5[20], v6[20], v7[20], v8[20];
+        strcpy(v5,"Market");
+        strcpy(v6,"Health boost");
+        strcpy(v7,"Jump boost");
+        strcpy(v8,"Return to the game");
 
-    MENU market(y_scr/2,x_scr/2,y_scr/4,x_scr/4,v5,v6,v7,v8);
+        MENU market(y_scr/2,x_scr/2,y_scr/4,x_scr/4,v5,v6,v7,v8);
 
-    clear();
-    refresh();
+        clear();
+        refresh();
 
-    int cx=menu.choice();
-    if(cx==1){
-        game_flow(y_scr,x_scr,map,box,map1,map2,map3,map4,map5,
-                    map6,map7,map8,map9,map10,seed);
-    }else if(cx==2){
-        //accesso al market
-       int mx=market.choice();
-        if(mx==1)
-            buyHealth(p);
-        else if(mx==2)
-            buyJumpboost(p);
-        else{
-            clear();
-            refresh();
-            WINDOW* n_map = map_generator(map1,map2,map3,map4,map5,map6,
-                                            map7,map8,map9,map10,seed,false);
-            game_flow(y_scr,x_scr,n_map,box,map1,map2,map3,map4,map5,
-                        map6,map7,map8,map9,map10,seed);
-            endwin();
-            return;
+        int cx=menu.choice();
+        if(cx==1){
+                clear();
+                refresh();
+                int kek=save_data(p, seed, "savegame.txt" );
+                if(kek==1)
+                {
+                	clear();
+                	mvprintw(0, 0, "loading");
+                	refresh();
+                	getch();
+                	clear();
+                	refresh();
+                }else
+                {
+                    clear();
+                    mvprintw(0, 0, "error in load screen ");
+                    refresh();
+                    getch();
+                    clear();
+                    refresh();
+                }
+                WINDOW* n_map = map_generator(map1,map2,map3,map4,map5,map6,
+                                                map7,map8,map9,map10,seed,false);
+                game_flow(y_scr,x_scr,n_map,box,map1,map2,map3,map4,map5,
+                            map6,map7,map8,map9,map10,seed);
+                endwin();
+                return;
+        }else if(cx==2){
+            //accesso al market
+           int mx=market.choice();
+            if(mx==1){
+                buyHealth(p);
+                clear();
+                refresh();
+                int kek=save_data(p, seed, "savegame.txt" );
+                if(kek==1)
+                {
+                	clear();
+                	mvprintw(0, 0, "loading");
+                	refresh();
+                	getch();
+                	clear();
+                	refresh();
+                }else
+                {
+                	clear();
+                	mvprintw(0, 0, "error in load screen ");
+                	refresh();
+                	getch();
+                	clear();
+                	refresh();
+                }
+                WINDOW* n_map = map_generator(map1,map2,map3,map4,map5,map6,
+                                                map7,map8,map9,map10,seed,false);
+                game_flow(y_scr,x_scr,n_map,box,map1,map2,map3,map4,map5,
+                            map6,map7,map8,map9,map10,seed);
+                endwin();
+                return;
+            }else if(mx==2){
+                buyJumpboost(p);
+                clear();
+                refresh();
+                int kek=save_data(p, seed, "savegame.txt" );
+                if(kek==1)
+                {
+                	clear();
+                    mvprintw(0, 0, "loading");
+                    refresh();
+                    getch();
+                    clear();
+                    refresh();
+                }else
+                {
+                	clear();
+                	mvprintw(0, 0, "error in load screen ");
+                	refresh();
+                	getch();
+                	clear();
+                	refresh();
+                }
+                WINDOW* n_map = map_generator(map1,map2,map3,map4,map5,map6,
+                                                map7,map8,map9,map10,seed,false);
+                game_flow(y_scr,x_scr,n_map,box,map1,map2,map3,map4,map5,
+                            map6,map7,map8,map9,map10,seed);
+                endwin();
+                return;
+            }else{
+                clear();
+                refresh();
+                /*
+                 * ottenimento dati del giocatore al momento dell'invocazione del resume
+                 *
+                 */
+
+                //int py, px, lf, mn;
+                int kek=save_data(p, seed, "savegame.txt" );
+                if(kek==1)
+                    	{
+                    		clear();
+                    		mvprintw(0, 0, "loading");
+                    		refresh();
+                    		getch();
+                    		clear();
+                    		refresh();
+                    	}else
+                    	{
+                    		clear();
+                    		mvprintw(0, 0, "error in load screen ");
+                    		refresh();
+                    	    getch();
+                    	    clear();
+                    	    refresh();
+                    	}
+                WINDOW* n_map = map_generator(map1,map2,map3,map4,map5,map6,
+                                                map7,map8,map9,map10,seed,false);
+                game_flow(y_scr,x_scr,n_map,box,map1,map2,map3,map4,map5,
+                            map6,map7,map8,map9,map10,seed);
+                endwin();
+                return;
+            }
         }
-    }
     else if(cx==3){
         //salva partita
         //salva partita
@@ -349,15 +500,27 @@ int main(int argc, char** argv){
         ifstream savegame;
         savegame.open("savegame.txt");
         if(savegame.is_open()){
-        	string kek;
+        	string kek, dump2;
         	for(int i=0; i<4; i++)
         	{
         		getline(savegame,kek);
         	}
         	kek="";
-        	getline(savegame,kek);
+        	getline(savegame,kek, '#');
 
-        	seed_generated=stoi(kek);
+        	if(kek.compare("map")==0)
+        	{
+        		getline(savegame, kek, '\n');
+        		seed_generated=stoi(kek);
+        	}else
+        	{
+        		clear();
+        		mvprintw((y_scr/2)-5, (x_scr/2)-2, "error in locating map number");
+        		mvprintw((y_scr/2)-4, (x_scr/2)-2, "resorting to default value");
+        		refresh();
+        		getch();
+        		getline(savegame, dump2);
+        	}
         }
         savegame.close();
 

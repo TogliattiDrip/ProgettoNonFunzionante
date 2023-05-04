@@ -1,5 +1,3 @@
-#include <ncurses/ncurses.h>
-using namespace std;
 //aggiorna la funzione di spawn per leggere eventuali salvataggi; se presenti, passa x ed y per lo spawn altrimenti default
 //nella funzione che crea il player, tieni conto della vita nei salvataggi
 #include "player.hpp"
@@ -25,6 +23,9 @@ player::player(WINDOW * win, int y, int x, char c, int m, int l){
 
 	//Soldi del giocatore
 	money=m;
+
+	//altezza salto
+	salto=10;
 
 	//prezzo upgrade della vita e del salto
 	healthPrice=20;
@@ -229,7 +230,7 @@ void player::mvleft(){
 void player::jump(){
 	if(dir==true && s==false){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < salto; cont++){
 			mvup();
 			display(NULL);
 			usleep(10000);
@@ -253,7 +254,7 @@ void player::jump(){
 	}
 	else if(dir==false && s==false){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < salto; cont++){
 			mvup();
 			display(NULL);
 			if(s==true)
@@ -279,7 +280,7 @@ void player::jump(){
 	}
 	else if(dir==true && s==true){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < salto; cont++){
 			mvup();
 			display(NULL);
 			shoot();
@@ -315,7 +316,7 @@ void player::jump(){
 	}
 	else if(dir==false && s==true){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < salto; cont++){
 			mvup();
 			display(NULL);
 			shoot();
@@ -625,6 +626,9 @@ int player::playeroutput(int input){
 		break;
 	case 11:
 		return money;
+		break;
+	case 12:
+		return salto;
 		break;
 	default:
 		return -1;

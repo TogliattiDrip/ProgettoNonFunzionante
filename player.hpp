@@ -1,6 +1,6 @@
 #include <iostream>
-#include<ncurses/ncurses.h>
-#include<unistd.h>
+#include <ncurses.h>
+#include <unistd.h>
 using namespace std;
 
 class player {

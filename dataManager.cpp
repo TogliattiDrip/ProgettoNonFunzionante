@@ -38,14 +38,17 @@ int save_data(player* P, int Seed, string fileName)
 	dataInt=P->playeroutput(1);	//get_x
 	saveFile << "X_loc#"<<dataInt << endl;
 
-	dataInt = P->playeroutput(4);	//get_life
-	saveFile << dataInt << endl;
+	dataInt = P->playeroutput(4);	//gemt_life
+	saveFile <<"life#" <<dataInt << endl;
 
 	dataInt = P->playeroutput(11);	//get_credits
-	saveFile << dataInt << endl;
+	saveFile <<"credits#" <<dataInt << endl;
 
 	dataInt = Seed;					//get_mapSeed
-	saveFile << Seed << endl;
+	saveFile <<"map#"<< Seed << endl;
+
+	dataInt= P->playeroutput(12);
+	saveFile << "jumpH#" << dataInt << endl;
 
 	saveFile.close();
 

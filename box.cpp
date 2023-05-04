@@ -73,7 +73,7 @@ WINDOW* MAP::create_map(){
             }
         }
     }
-    
+
     //scale
     if(ladder_on==true){
         for(int i=0;i<width;i++){
@@ -149,7 +149,7 @@ WINDOW* MAP::create_map(){
         mvwprintw(fin,6,101,"ççç}*");
         mvwprintw(fin,7,100,";]}}'");
         mvwprintw(fin,8,99,"+**");
-    } 
+    }
 
 
 

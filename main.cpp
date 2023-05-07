@@ -3,14 +3,12 @@
  * 	++ -I/mingw64/include/ncurses -o Progetto main.cpp player.hpp player.cpp box.hpp box.cpp dataManager.hpp dataManager.cpp market.hpp market.cpp -lncurses -lpthread -L/mingw64/bin -static
  *
  *Linux launch
- *g++ main.cpp player.hpp player.cpp box.hpp box.cpp dataManager.hpp dataManager.cpp market.hpp market.cpp .lncurses .o Progetto
+ *g++ main.cpp player.hpp player.cpp box.hpp box.cpp dataManager.hpp dataManager.cpp market.hpp market.cpp -lncurses -o Progetto
  * nella cartella con il file .exe, lancia il nome del progetto ./file.exe
  */
 
 #include <iostream>
 #include <ncurses.h>
-#include <cstring>
-#include <string>
 #include <ctime>
 #ifdef _WIN32
 #include <pthread.h>
@@ -164,7 +162,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
     int player_x, player_y, money, life;
 
 	//FOLLOWING: default values for creating player-class items
-	player_x=4;
+	player_x=2;
 	player_y=15;
 	money=100;
 	life=3;
@@ -253,8 +251,6 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
         //(finestra, y da cui il personagio spawna,
         //x da cui il personaggio spawna, icona del personaggio)
 
-    p->salto=saltoH;
-
 
 
 
@@ -282,6 +278,15 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                                             map7,map8,map9,map10,seed,true);
         WINDOW* new_map = map_generator(map1,map2,map3,map4,map5,map6,
                                         map7,map8,map9,map10,seed_generated,true);
+        //reset posizione personaggio
+
+        //x=4	y=15
+        changeData_basic(1, "15");
+        changeData_basic(2, "3");
+        string depe;
+        depe= to_string(seed_generated);
+        changeData_basic(5, depe );
+
         game_flow(y_scr,x_scr,new_map,box,map1,map2,map3,map4,map5,
                     map6,map7,map8,map9,map10,seed_generated);
         endwin();
@@ -294,6 +299,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
         refresh();
         death_screen(box,y_scr,x_scr,map1,map2,map3,map4,map5,map6,map7,
                         map8,map9,map10,seed);
+        remove("savegame.txt");
         endwin();
         return;
     }
@@ -326,6 +332,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                 {
                 	clear();
                 	mvprintw(0, 0, "loading");
+                	mvprintw(1, 0, "press a key to continue");
                 	refresh();
                 	getch();
                 	clear();
@@ -334,6 +341,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                 {
                     clear();
                     mvprintw(0, 0, "error in load screen ");
+                    mvprintw(1, 0, "press a key to continue");
                     refresh();
                     getch();
                     clear();
@@ -357,6 +365,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                 {
                 	clear();
                 	mvprintw(0, 0, "loading");
+                	mvprintw(1, 0, "press a key to continue");
                 	refresh();
                 	getch();
                 	clear();
@@ -365,6 +374,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                 {
                 	clear();
                 	mvprintw(0, 0, "error in load screen ");
+                	mvprintw(1, 0, "press a key to continue");
                 	refresh();
                 	getch();
                 	clear();
@@ -385,6 +395,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                 {
                 	clear();
                     mvprintw(0, 0, "loading");
+                    mvprintw(1,0, "press a key to continue");
                     refresh();
                     getch();
                     clear();
@@ -393,6 +404,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                 {
                 	clear();
                 	mvprintw(0, 0, "error in load screen ");
+                	mvprintw(1, 0, "press a key to continue");
                 	refresh();
                 	getch();
                 	clear();
@@ -411,13 +423,13 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                  * ottenimento dati del giocatore al momento dell'invocazione del resume
                  *
                  */
-
                 //int py, px, lf, mn;
                 int kek=save_data(p, seed, "savegame.txt" );
                 if(kek==1)
                     	{
                     		clear();
                     		mvprintw(0, 0, "loading");
+                    		mvprintw(1, 0, "press a key to continue");
                     		refresh();
                     		getch();
                     		clear();
@@ -426,6 +438,7 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
                     	{
                     		clear();
                     		mvprintw(0, 0, "error in load screen ");
+                    		mvprintw(1, 0, "press a key to continue");
                     		refresh();
                     	    getch();
                     	    clear();
@@ -440,8 +453,6 @@ void game_flow(int y_scr, int x_scr, WINDOW* map, class BOX box,
             }
         }
     else if(cx==3){
-        //salva partita
-        //salva partita
     	int kek=save_data(p, seed, "savegame.txt" );
     	if(kek==1)
     	{

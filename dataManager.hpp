@@ -5,11 +5,12 @@
  *      Author: lucar
  */
 #include <iostream>
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 #include <cstring>
 #include <string>
 #include <ctime>
 #include <fstream>
+#include <cstdio>
 #include "market.hpp"
 using namespace std;
 
@@ -28,3 +29,7 @@ int save_data(player* P, int Seed, string filename);
 
 
 //void read_data(){}
+
+void changeData_basic(int itemNum, string content);
+
+void copyFile(string oldFileName, string newFileName);

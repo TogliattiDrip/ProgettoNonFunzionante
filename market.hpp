@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <ctime>
-#include <ncurses/ncurses.h>
+#include <ncurses.h>
 #include "box.hpp"
 #include "player.hpp"
 using namespace std;

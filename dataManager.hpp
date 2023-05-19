@@ -1,16 +1,9 @@
-/*
- * dataManager.hpp
- *
- *  Created on: 30 mar 2023
- *      Author: lucar
- */
 #include <iostream>
 #include <ncurses.h>
 #include <cstring>
 #include <string>
 #include <ctime>
 #include <fstream>
-#include <cstdio>
 #include "market.hpp"
 using namespace std;
 

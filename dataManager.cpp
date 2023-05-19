@@ -1,9 +1,3 @@
-/*
- * dataManager.cpp
- *
- *  Created on: 30 mar 2023
- *      Author: lucar
- */
 #include "dataManager.hpp"
 
 /*
@@ -147,3 +141,75 @@ void changeData_basic(int itemNum, string content)
 		remove("copy.txt");
 	}
 }
+
+
+int obtain_data(int kek)
+{
+	string lookOut;
+	switch (kek){
+	case 1:	//player x
+		lookOut="X_loc#";
+	break;
+	case 2: // player y
+		lookOut="Y_loc#";
+	break;
+	case 3:	//player life
+		lookOut="life#";
+	break;
+	case 4:	//player credits
+		lookOut="credits#";
+	break;
+	case 5:
+		lookOut="map#";
+	break;
+	default:
+		return -4;
+	break;
+	}
+	ifstream inFile;
+	inFile.open("savegame.txt");
+	string uwu="";
+	if(inFile.is_open())
+	while(!inFile.eof())
+	{
+		getline(inFile, uwu, '#');
+		if(uwu.compare(lookOut)==0)
+		{
+			getline(inFile, uwu, '\n');
+			break;
+		}else
+		{
+			getline(inFile, uwu, '\n');
+			uwu="";
+		}
+
+	}
+
+	if(uwu.compare("")==0)
+		return -1;
+	else
+		return stoi(uwu);
+
+
+
+
+
+	return -1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

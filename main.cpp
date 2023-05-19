@@ -15,14 +15,6 @@
 #include "gameEngine.hpp"
 using namespace std;
 
-//screen initzialization
-void initialize(){
-    initscr(); //initialization of screen and memory
-    refresh(); //refresh screen to be compatible with what is in memory
-    noecho(); //impedisce all'user di typare
-    curs_set(false); //cursor hider
-}
-
 int main(int argc, char** argv){
     initialize();
     int y_scr, x_scr;
@@ -61,8 +53,7 @@ int main(int argc, char** argv){
         mvprintw(0, 0, "Press a key to start the Game from the Game-Save!");
     	getch();
         clear();
-        int seed_generated=map_randomizer(map1,map2,map3,map4,map5,map6,
-                                               map7,map8,map9,map10,0,false);
+        int seed_generated=0;
         //check if savegame.txt exists
         ifstream savegame;
         savegame.open("savegame.txt");
@@ -92,7 +83,7 @@ int main(int argc, char** argv){
         savegame.close();
 
         WINDOW* map_used=map_generator(map1,map2,map3,map4,map5,map6,
-                                        map7,map8,map9,map10,seed_generated,true);
+                                        map7,map8,map9,map10,seed_generated,false);
 
         game_flow(y_scr,x_scr,map_used,pre_box,map1,map2,map3,map4,map5,map6,map7,
                     map8,map9,map10,seed_generated,false);
@@ -101,7 +92,7 @@ int main(int argc, char** argv){
         refresh();
         remove("savegame.txt");
         int seed_generated=map_randomizer(map1,map2,map3,map4,map5,map6,map7,
-                                               map8,map9,map10,0,false);
+                                               map8,map9,map10,1,false);
         WINDOW* map_used=map_generator(map1,map2,map3,map4,map5,map6,
                                         map7,map8,map9,map10,seed_generated,false);
 

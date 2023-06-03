@@ -1,0 +1,10 @@
+Y_loc#16
+X_loc#36
+life#3
+credits#100
+map#1
+score#0
+-- ENEMY LOG --
+lvl#1/Enemy#j_e/X#98/life#3/
+lvl#2/Enemy#j_e/X#113/life#0/
+lvl#3/Enemy#j_e/X#94/life#3/

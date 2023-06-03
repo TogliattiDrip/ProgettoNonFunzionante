@@ -18,7 +18,7 @@ void buyHealth(player* player){
 void buyJumpboost(player* player){
     if(checkCurrency(player->jumpPrice, player)){
         (player->salto) ++;
-        player->money=player->money-player->jumpPrice;
+        player->money=(player->money)-(player->jumpPrice);
         player->jumpPrice=player->jumpPrice+10;
     }
 }

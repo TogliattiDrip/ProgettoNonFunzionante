@@ -47,9 +47,11 @@ int main(int argc, char** argv){
 
     int c=menu.choice();
     if(c==3){
+        //exit
         endwin();
         return 0;
     }else if(c==2){
+        //start game from a gamefile
         mvprintw(0, 0, "Press a key to start the Game from the Game-Save!");
     	getch();
         clear();
@@ -88,6 +90,7 @@ int main(int argc, char** argv){
         game_flow(y_scr,x_scr,map_used,pre_box,map1,map2,map3,map4,map5,map6,map7,
                     map8,map9,map10,seed_generated,false);
     }else{
+        //new game
     	clear();
         refresh();
         remove("savegame.txt");

@@ -487,6 +487,8 @@ int basicenemy::enemyOutput(int input){
 	case 7:
 		return money;
 		break;
+	case 8:
+		return enemyID;
 	default:
 		return -1;
 		break;

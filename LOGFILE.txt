@@ -1,0 +1,74 @@
+INITIALIZING
+PREGAME PHASE BEGINNING
+PREGAME PHASE: COMPLETE
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: E
+process ended without any error with status = 1
+preparing to save data for new level entrance:-->	automatic savegame complete (b_e)
+successful operation
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: e
+process ended without any error with status = 2
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: j
+process ended without any error with status = 2
+preparing to save data for new level entrance:-->	automatic savegame complete (b_e)
+successful operation
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: <
+process ended without any error with status = 2
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: E
+process ended without any error with status = 2
+preparing to save data for new level entrance:-->	automatic savegame complete (b_e)
+successful operation
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: e
+process ended without any error with status = 2
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: e
+process ended without any error with status = 2
+preparing to save data for new level entrance:-->	automatic savegame complete (b_e)
+successful operation
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: j
+process ended without any error with status = 2
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: E
+process ended without any error with status = 2
+preparing to save data for new level entrance:-->	automatic savegame complete (b_e)
+successful operation
+NEW ISTANCE OF GAMEFLOW BEGINNING
+player data succesfully retrieved
+call to obtain_data for creation of an enemy entity (currentyl jumped)
+call yielded negative result, loading enemy with basic creation
+preparing to save data for new instance of gameFlow:-->	automatic savegame complete. Enemy type: E
+process ended without any error with status = 2
+preparing to save data throught savedata manual command: -->operation yielded result: 2

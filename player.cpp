@@ -1,11 +1,10 @@
-
 #include "player.hpp"
 
 
 
 //ritorna true se il char in input è considerabile terreno, false atrimenti
 bool player::isterrain(char t){
-	if(t=='#' || t=='-' || t=='|' || t=='e')
+	if(t=='#' || t=='-' || t=='|' || t=='e'|| t=='{' || t=='[' || t==']' || t=='}')
 		return true;
 	else
 		return false;
@@ -183,14 +182,10 @@ void player::mvleft(){
 //Funzione per il salto. E' connessa con la funzione shoot() per permettere di saltare mentre
 //il proiettile sta venendo disegnato.
 //Ho aumentato l'ampiezza del salto e la sua velocità per migliorare il feeling del gioco.
-
-//!IDEA PER UN POTENZIAMENTO!
-//Si potrebbe cambiare l'ampiezza del salto con una semplice variabile, essendo che questa è controllata
-//da un contatore.
 void player::jump(){
 	if(dir==true && s==false){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < jump_width; cont++){
 			mvup();
 			display(NULL);
 			usleep(10000);
@@ -214,7 +209,7 @@ void player::jump(){
 	}
 	else if(dir==false && s==false){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < jump_width; cont++){
 			mvup();
 			display(NULL);
 			if(s==true)
@@ -240,7 +235,7 @@ void player::jump(){
 	}
 	else if(dir==true && s==true){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < jump_width; cont++){
 			mvup();
 			display(NULL);
 			shoot();
@@ -276,7 +271,7 @@ void player::jump(){
 	}
 	else if(dir==false && s==true){
 		j=true;
-		for(int cont = 0; cont < 10; cont++){
+		for(int cont = 0; cont < jump_width; cont++){
 			mvup();
 			display(NULL);
 			shoot();

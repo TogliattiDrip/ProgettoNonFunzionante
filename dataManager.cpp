@@ -188,9 +188,9 @@ void changeData_basic(int itemNum, string content)	//cambia il valore di uno spe
 		//cout << "error,  current lookOut variable is invalid" << endl;
 	}else
 	{
-		string kek;
+		string kek = "";
 		int sus=-1;
-		while(!File.eof())
+		while(!File.eof() && kek.compare("-- ENEMY LOG --") != 0)
 		{
 			getline(File,kek);
 			sus=kek.find(lookOut);
@@ -201,6 +201,12 @@ void changeData_basic(int itemNum, string content)	//cambia il valore di uno spe
 
 			}
 			oFile << kek << endl;
+		}
+
+		while(!File.eof())
+		{
+			getline(File,kek);
+			oFile << kek << endl;	
 		}
 		oFile.close();
 		File.close();
